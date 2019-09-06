@@ -546,7 +546,7 @@ SESSION_CONFIGURATION:
 SKIP_SCD:
   description: Skip static content deployment.
   magento_version: ">=2.1.4"
-  datatype: boolean
+  type: boolean
   sections:
     - build
     - deploy
@@ -561,7 +561,7 @@ SKIP_HTML_MINIFICATION:
   description: Skip copying the static view files in the var/view_preprocessed directory to reduce downtime when
     deploying to staging and production environments and generate minified HTML at request time.
   magento_version: ">=2.1.4"
-  datatype: boolean
+  type: boolean
   sections:
     - global
   values:
