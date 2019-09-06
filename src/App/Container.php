@@ -82,6 +82,10 @@ class Container implements ContainerInterface
                 $systemList->getMagentoRoot()
             );
         });
+        $this->container->singleton(ConfigValidator\Variable\MagentoVersion::class);
+        $this->container->singleton(ConfigValidator\Variable\Section::class);
+        $this->container->singleton(ConfigValidator\Variable\Type::class);
+        $this->container->singleton(ConfigValidator\Variable\Values::class);
         $this->container->singleton(
             Flag\Pool::class,
             function () {

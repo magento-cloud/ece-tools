@@ -8,6 +8,7 @@ namespace Magento\MagentoCloud\Config\Stage;
 use Magento\MagentoCloud\Config\Schema;
 use Magento\MagentoCloud\Config\Stage\Deploy\MergedConfig;
 use Magento\MagentoCloud\Config\StageConfigInterface;
+use Magento\MagentoCloud\Config\VariableSchema;
 
 /**
  * @inheritdoc
@@ -65,10 +66,10 @@ class Deploy implements DeployInterface
 
         $value = $decodedValue !== null && json_last_error() === JSON_ERROR_NONE ? $decodedValue : $value;
 
-        $schemaDetails = $this->schema->getSchema()[$name];
+        $schemaDetails = $this->schema->get($name);
 
-        if ($schemaDetails[Schema::SCHEMA_TYPE] === ['array'] && !is_array($value)) {
-            $value = $schemaDetails[Schema::SCHEMA_DEFAULT_VALUE][StageConfigInterface::STAGE_DEPLOY];
+        if ($schemaDetails->getType() === VariableSchema::TYPE_ARRAY && !is_array($value)) {
+            $value = $schemaDetails->getDefault();
         }
 
         return $value;

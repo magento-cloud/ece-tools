@@ -34,4 +34,13 @@ class ValidatorFactory
     {
         return $this->container->create($validator);
     }
+
+    /**
+     * @param string $validator
+     * @return VariableValidatorInterface
+     */
+    public function createVariableValidator(string $validator): VariableValidatorInterface
+    {
+        return $this->container->create($validator);
+    }
 }

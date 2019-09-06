@@ -43,7 +43,7 @@ class PostDeploy implements PostDeployInterface
      */
     public function get(string $name)
     {
-        if (!array_key_exists($name, $this->schema->getDefaults(StageConfigInterface::STAGE_POST_DEPLOY))) {
+        if (!array_key_exists($name, $this->schema->getDefaults())) {
             throw new \RuntimeException(sprintf(
                 'Config %s was not defined.',
                 $name
@@ -71,7 +71,7 @@ class PostDeploy implements PostDeployInterface
             $envConfig = $this->environmentReader->read()[self::SECTION_STAGE] ?? [];
 
             $this->mergedConfig = array_replace(
-                $this->schema->getDefaults(StageConfigInterface::STAGE_POST_DEPLOY),
+                $this->schema->getDefaults(),
                 $envConfig[self::STAGE_GLOBAL] ?? [],
                 $envConfig[self::STAGE_POST_DEPLOY] ?? []
             );
