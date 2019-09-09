@@ -18,6 +18,14 @@ use Magento\MagentoCloud\Config\GlobalSection as GlobalConfig;
 class CompressStaticContent implements ProcessInterface
 {
     /**
+     * Compression level to be used by gzip.
+     *
+     * This should be an integer between 1 and 9, inclusive.
+     * Compression level 4 is the a faster trade-off between speed and compression strength.
+     */
+    const COMPRESSION_LEVEL = 4;
+
+    /**
      * @var LoggerInterface
      */
     private $logger;
@@ -80,7 +88,7 @@ class CompressStaticContent implements ProcessInterface
             && !$this->flagManager->exists(FlagManager::FLAG_STATIC_CONTENT_DEPLOY_IN_BUILD)
         ) {
             $this->staticContentCompressor->process(
-                $this->stageConfig->get(DeployInterface::VAR_SCD_COMPRESSION_LEVEL),
+                $this->stageConfig->get(DeployInterface::VAR_SCD_COMPRESSION_LEVEL) ?: self::COMPRESSION_LEVEL,
                 $this->stageConfig->get(DeployInterface::VAR_SCD_COMPRESSION_TIMEOUT),
                 $this->stageConfig->get(DeployInterface::VAR_VERBOSE_COMMANDS)
             );

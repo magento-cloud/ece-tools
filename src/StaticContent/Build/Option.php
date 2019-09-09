@@ -107,7 +107,7 @@ class Option implements OptionInterface
      */
     public function getStrategy(): string
     {
-        return $this->stageConfig->get(BuildInterface::VAR_SCD_STRATEGY);
+        return (string) $this->stageConfig->get(BuildInterface::VAR_SCD_STRATEGY);
     }
 
     /**
@@ -144,7 +144,7 @@ class Option implements OptionInterface
      */
     public function getVerbosityLevel(): string
     {
-        return $this->stageConfig->get(BuildInterface::VAR_VERBOSE_COMMANDS);
+        return (string) $this->stageConfig->get(BuildInterface::VAR_VERBOSE_COMMANDS);
     }
 
     /**
