@@ -44,7 +44,7 @@ class Variables implements SystemConfigInterface
      */
     public function get(string $name)
     {
-        if (!array_key_exists($name, $this->schema->getDefaults())) {
+        if (!array_key_exists($name, $this->schema->getDefaults(SystemConfigInterface::SYSTEM_VARIABLES))) {
             throw new \RuntimeException(sprintf(
                 'Config %s was not defined.',
                 $name
@@ -72,7 +72,7 @@ class Variables implements SystemConfigInterface
             $envConfig = $this->environmentReader->read()[self::SECTION_SYSTEM] ?? [];
 
             $this->mergedConfig = array_replace(
-                $this->schema->getDefaults(),
+                $this->schema->getDefaults(SystemConfigInterface::SYSTEM_VARIABLES),
                 $envConfig[self::SYSTEM_VARIABLES] ?? []
             );
         }

@@ -57,9 +57,11 @@ class Schema
     /**
      * Returns default values.
      *
+     * @var string $stage Filter the defaults to just those for a given stage
+     *
      * @return array
      */
-    public function getDefaults(): array
+    public function getDefaults(string $stage = ''): array
     {
         if (!isset($this->defaults)) {
             $this->loadSchema();
@@ -69,6 +71,12 @@ class Schema
 
                 $this->defaults[$itemName] = $schema->getDefault();
             }
+        }
+
+        if ($stage) {
+            return array_filter($this->defaults, function (string $key) use ($stage): bool {
+                return in_array($stage, $this->get($key)->getSections(), true);
+            }, ARRAY_FILTER_USE_KEY);
         }
 
         return $this->defaults;

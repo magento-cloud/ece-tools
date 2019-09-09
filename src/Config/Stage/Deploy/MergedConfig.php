@@ -63,7 +63,7 @@ class MergedConfig
                 $envConfig = $this->environmentReader->read()[DeployInterface::SECTION_STAGE] ?? [];
 
                 $this->mergedConfig = array_replace(
-                    $this->schema->getDefaults(),
+                    $this->schema->getDefaults(StageConfigInterface::STAGE_DEPLOY),
                     $envConfig[DeployInterface::STAGE_GLOBAL] ?? [],
                     $envConfig[DeployInterface::STAGE_DEPLOY] ?? [],
                     $this->environmentConfig->getAll()

@@ -44,7 +44,7 @@ class GlobalSection implements StageConfigInterface
      */
     public function get(string $name)
     {
-        if (!array_key_exists($name, $this->schema->getDefaults())) {
+        if (!array_key_exists($name, $this->schema->getDefaults(StageConfigInterface::STAGE_GLOBAL))) {
             throw new \RuntimeException(sprintf(
                 'Config %s was not defined.',
                 $name
@@ -73,7 +73,7 @@ class GlobalSection implements StageConfigInterface
             $envConfig = $this->environmentReader->read()[self::SECTION_STAGE] ?? [];
 
             $this->mergedConfig = array_replace(
-                $this->schema->getDefaults(),
+                $this->schema->getDefaults(StageConfigInterface::STAGE_GLOBAL),
                 $envConfig[self::STAGE_GLOBAL] ?? []
             );
         }
