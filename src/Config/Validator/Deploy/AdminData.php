@@ -33,27 +33,17 @@ class AdminData implements ValidatorInterface
     private $resultFactory;
 
     /**
-     * Validates if database configured properly.
-     *
-     * @var DatabaseConfiguration
-     */
-    private $databaseConfiguration;
-
-    /**
      * @param State $state
      * @param Environment $environment
-     * @param DatabaseConfiguration $databaseConfiguration
      * @param ResultFactory $resultFactory
      */
     public function __construct(
         State $state,
         Environment $environment,
-        DatabaseConfiguration $databaseConfiguration,
         ResultFactory $resultFactory
     ) {
         $this->state = $state;
         $this->environment = $environment;
-        $this->databaseConfiguration = $databaseConfiguration;
         $this->resultFactory = $resultFactory;
     }
 
@@ -66,15 +56,15 @@ class AdminData implements ValidatorInterface
     {
         $data = $this->getAdminData();
 
-        if ($this->databaseConfiguration->validate() instanceof Success) {
-            if ($this->state->isInstalled() && $data) {
+        if ($data) {
+            if ($this->state->isInstalled()) {
                 return $this->resultFactory->error(
                     'The following admin data is required to create an admin user during initial installation'
                     . ' only and is ignored during upgrade process: ' . implode(', ', $data)
                 );
             }
 
-            if (!$this->environment->getAdminEmail() && $data) {
+            if (!$this->environment->getAdminEmail()) {
                 return $this->resultFactory->error(
                     'The following admin data was ignored and an admin was not created because admin email is not set: '
                     . implode(', ', $data),

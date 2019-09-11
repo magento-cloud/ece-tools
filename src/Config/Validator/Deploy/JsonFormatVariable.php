@@ -10,6 +10,7 @@ use Magento\MagentoCloud\Config\Stage\Deploy\MergedConfig;
 use Magento\MagentoCloud\Config\StageConfigInterface;
 use Magento\MagentoCloud\Config\Validator;
 use Magento\MagentoCloud\Config\ValidatorInterface;
+use Magento\MagentoCloud\Config\VariableSchema;
 
 /**
  * Checks that array-type variables given as json string can be decoded into array.
@@ -56,15 +57,14 @@ class JsonFormatVariable implements ValidatorInterface
         try {
             $errors = [];
 
-            foreach ($this->schema->getSchema() as $optionName => $optionConfig) {
-                if ($optionConfig[Schema::SCHEMA_TYPE] !== ['array'] ||
-                    !in_array(StageConfigInterface::STAGE_DEPLOY, $optionConfig[Schema::SCHEMA_STAGE]) ||
-                    !is_string($this->mergedConfig->get()[$optionName])
+            foreach ($this->mergedConfig->get() as $optionName => $optionValue) {
+                if (!is_string($optionValue) ||
+                    $this->schema->get($optionName)->getType() !== VariableSchema::TYPE_ARRAY
                 ) {
                     continue;
                 }
 
-                json_decode($this->mergedConfig->get()[$optionName], true);
+                json_decode($optionValue, true);
 
                 if (json_last_error() !== JSON_ERROR_NONE) {
                     $errors[] = sprintf('%s (%s)', $optionName, json_last_error_msg());

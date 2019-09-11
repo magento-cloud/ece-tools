@@ -36,7 +36,7 @@ CLEAN_STATIC_FILES:
 CRON_CONSUMERS_RUNNER:
   description: Ensure message queues are running after a deployment. You must specify values for `cron_run` (boolean),
     `max_messages` (integer), and `consumers` (array).
-  magento_version: ">=2.1.4"
+  magento_version: ">=2.2.0"
   type: array
   sections:
     - deploy
@@ -46,7 +46,7 @@ CRON_CONSUMERS_RUNNER:
     max_messages: 10000
     consumers: []
   validators:
-    - Magento\MagentoCloud\Config\Validator\Variable\CronConsumerRunner
+    - Magento\MagentoCloud\Config\Validator\Variable\CronConsumersRunner
   examples:
     - stage:
         deploy:
@@ -118,8 +118,6 @@ DEPLOY_FROM_GIT_OPTIONS:
   type: array
   sections:
     - global
-  validators:
-    - Magento\MagentoCloud\Config\Validator\Variable\DeployedMagentoVersion
   examples:
     - stage:
         global:
@@ -312,8 +310,6 @@ QUEUE_CONFIGURATION:
     - deploy
     - global
   allow_merge: true
-  validators:
-    - Magento\MagentoCloud\Config\Validator\Variable\QueueConfiguration
   examples:
     - stage:
         deploy:

@@ -122,7 +122,8 @@ class StageConfig implements ValidatorInterface
             }
         }
 
-        return array_map(function(Error $result) {
+        return array_map(
+            function (Error $result) {
                 return $result->getError();
             },
             array_filter($errors, function (Validator\ResultInterface $result) {
